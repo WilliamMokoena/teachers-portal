@@ -1,11 +1,14 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
+// Custom Components
+import AppBar from "Components/AppBar"
+
 const Dashboard: NextPage = () => {
   return (
-    <div>
-      <h1>Hello Dashboard</h1>
-    </div>
+    <>
+      <AppBar />
+    </>
   )
 }
 
