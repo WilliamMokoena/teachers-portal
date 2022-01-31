@@ -48,8 +48,10 @@ const AppBar = () => {
 
         {/* Notifications and Avatar */}
         <Box w="20vw" paddingX={6}>
-          <HStack justifyItems="flex-end">
-            <BellIcon w={7} h={7} color="gray.500"/>
+          <HStack spacing={6} justify="flex-end">
+            <Button p={0} borderRadius="full">
+              <BellIcon w={7} h={7} color="gray.500" />
+            </Button>
             <Button p={0} borderRadius="full">
               <Avatar bg="gray.400" size="sm" />
             </Button>
