@@ -18,13 +18,14 @@ import {
   Input,
 } from '@chakra-ui/react'
 
-const LoginForm = () => {
+const SignInForm = () => {
   return (
     <Flex w="full" h="full" justifyContent="center" alignItems="center">
       <Box
         w="512px"
         borderWidth="1px"
         borderRadius="lg"
+        backgroundColor="white"
         bgColor=""
         paddingX="6"
         paddingY="10"
@@ -56,29 +57,23 @@ const LoginForm = () => {
             justifyContent="flex-start"
             w="80%"
             alignItems="center"
-            spacing={8}
+            spacing={6}
           >
             {/* Email */}
-            <FormControl>
+            {/* <FormControl>
               <FormLabel htmlFor="email-or-phone">Email or phone</FormLabel>
               <Input id="email-or-phone" placeholder="me@example.com" />
-              <FormHelperText>
-                <Link>Forgot email?</Link>
-              </FormHelperText>
-            </FormControl>
+            </FormControl> */}
             {/* Password */}
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <Input id="password" placeholder="******" type="password" />
-              <FormHelperText>
-                <Link>Forgot password?</Link>
-              </FormHelperText>
             </FormControl>
           </VStack>
 
           {/* Form Action Buttons */}
           <HStack w="80%">
-            <Button colorScheme="twitter" variant="outline">
+            <Button colorScheme="twitter" variant="ghost">
               Switch Accounts
             </Button>
             <Spacer />
@@ -92,4 +87,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default SignInForm

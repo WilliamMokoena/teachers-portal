@@ -4,13 +4,14 @@ import Head from 'next/head'
 import { VStack } from '@chakra-ui/react'
 
 // Custom Components
-import LoginForm from 'Components/AuthControl/signInForm'
+import SignInForm from 'Components/AuthControl/signInForm'
+import SignUpForm from 'Components/AuthControl/signUpForm'
 
 const Auth: NextPage = () => {
   return (
     <>
       <VStack pos="relative" h="100vh">
-        <LoginForm />
+        <SignUpForm />
       </VStack>
     </>
   )
