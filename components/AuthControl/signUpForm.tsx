@@ -2,9 +2,15 @@ import { useState } from 'react'
 
 import { Flex, Box, HStack, Text, VStack, Spacer } from '@chakra-ui/react'
 
+import { firebaseApp } from 'Lib/utils/firebase'
+
+import { getAuth } from 'firebase/auth'
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'
+
 import {
   Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -14,7 +20,12 @@ import {
 
 import { useForm } from 'react-hook-form'
 
+const auth = getAuth(firebaseApp)
+
 const SignUpForm = () => {
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth)
+
   const [passwordShown, setPasswordShown] = useState(false)
 
   const {
@@ -28,7 +39,8 @@ const SignUpForm = () => {
     <Flex w="full" h="full" justifyContent="center" alignItems="center">
       <form
         onSubmit={handleSubmit((data) => {
-          console.log(data)
+          createUserWithEmailAndPassword(data.email, data.password)
+          // console.log(data)
         })}
       >
         <Box
@@ -116,7 +128,15 @@ const SignUpForm = () => {
                   </Button>
                   <Spacer />
                   <Button colorScheme="twitter" variant="solid" type="submit">
-                    Next
+                    {loading ? (
+                      <CircularProgress
+                        isIndeterminate
+                        size="24px"
+                        color="blue.200"
+                      />
+                    ) : (
+                      'Next'
+                    )}
                   </Button>
                 </HStack>
               </VStack>

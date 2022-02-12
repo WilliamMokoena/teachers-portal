@@ -1,5 +1,13 @@
+import { useState } from 'react'
+
+import { firebaseApp } from 'Lib/utils/firebase'
+
+import { getAuth } from 'firebase/auth'
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
+
 import {
   Avatar,
+  CircularProgress,
   Box,
   Flex,
   HStack,
@@ -16,11 +24,28 @@ import {
   FormErrorMessage,
   FormHelperText,
   Input,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react'
+
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 import { useForm } from 'react-hook-form'
 
+const auth = getAuth(firebaseApp)
+
+/*
+// TODO:
+- Visually handle firebase errors
+- Implement callbacks for signing in and account switching
+*/
+
 const SignInForm = () => {
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth)
+
+  const [passwordShown, setPasswordShown] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -41,7 +66,7 @@ const SignInForm = () => {
       >
         <form
           onSubmit={handleSubmit((data) => {
-            console.log(data)
+            signInWithEmailAndPassword(data.email, data.password)
           })}
         >
           <VStack spacing={12}>
@@ -84,13 +109,29 @@ const SignInForm = () => {
               </FormControl>
               {/* Password */}
               <FormControl>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <Input
-                  {...register('password', { required: true })}
-                  id="password"
-                  placeholder="******"
-                  type="password"
-                />
+                <InputGroup>
+                  <Input
+                    {...register('password', { required: true })}
+                    id="password"
+                    placeholder="******"
+                    type={passwordShown ? 'text' : 'password'}
+                  />
+                  <InputRightElement width="3rem">
+                    <Button
+                      h="1.5rem"
+                      size="sm"
+                      variant="ghost"
+                      borderRadius="full"
+                      onClick={(e) =>
+                        setPasswordShown((prevState) => {
+                          return prevState ? false : true
+                        })
+                      }
+                    >
+                      {passwordShown ? <ViewOffIcon /> : <ViewIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
             </VStack>
 
@@ -101,7 +142,15 @@ const SignInForm = () => {
               </Button>
               <Spacer />
               <Button colorScheme="twitter" variant="solid" type="submit">
-                Sign In
+                {loading ? (
+                  <CircularProgress
+                    isIndeterminate
+                    size="24px"
+                    color="blue.200"
+                  />
+                ) : (
+                  'Sign In'
+                )}
               </Button>
             </HStack>
           </VStack>

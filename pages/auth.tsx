@@ -11,7 +11,8 @@ const Auth: NextPage = () => {
   return (
     <>
       <VStack pos="relative" h="100vh">
-        <SignUpForm />
+        {/* <SignUpForm /> */}
+        <SignInForm />
       </VStack>
     </>
   )
